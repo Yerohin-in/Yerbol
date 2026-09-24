@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<!--
+  BRAISE — Restaurant / Cafe Landing Page Template
+  ==================================================
+  QUICK CUSTOMIZATION GUIDE
+  1. Brand name & logo   -> search for "Braise" in the <nav> (~line with class="logo")
+  2. Colors              -> edit the :root{ } CSS variables at the top of <style> (--ink, --ochre, --brick, --paper)
+  3. Fonts                -> change the Google Fonts <link> and font-family values if you want different typefaces
+  4. Hero text/CTA        -> section class="hero" (headline, paragraph, buttons)
+  5. Menu items & prices  -> section id="menu" (each .menu-item block)
+  6. About/story text     -> section class="story"
+  7. Photos                -> the 4 gradient blocks in section id="gallery" (.g1–.g4) are placeholders.
+                             Replace the CSS background with: background:url('your-photo.jpg') center/cover;
+                             Only use photos you have a license for (see LICENSE.txt).
+  8. Testimonials          -> the three .testi-card blocks
+  9. Hours & address       -> section id="hours" and the <footer>
+  10. Reservation link     -> the .btn-primary / .btn-dark anchors (point href="#reserve" to your booking system/form)
+
+  See documentation.html in this package for the full setup guide.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Braise — Woodfire Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1D2B26;
+    --cream:#F5EFE3;
+    --ochre:#C98A3E;
+    --brick:#8C4A3A;
+    --paper:#FBF7EE;
+    --line:rgba(29,43,38,0.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Work Sans',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+  }
+  h1,h2,h3,.display{font-family:'Fraunces',serif;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  @media(max-width:640px){.wrap{padding:0 20px;}}
+
+  /* NAV */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;}
+  .logo{font-size:22px;font-weight:600;letter-spacing:0.5px;}
+  .logo span{color:var(--ochre);}
+  .nav-links{display:flex;gap:36px;font-size:15px;}
+  .nav-cta{background:var(--ink);color:var(--paper);padding:10px 22px;border-radius:2px;font-size:14px;}
+  @media(max-width:800px){.nav-links{display:none;}}
+
+  /* HERO */
+  .hero{padding:88px 0 96px;}
+  .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px;}}
+  .kicker{color:var(--brick);font-size:15px;margin-bottom:18px;}
+  .hero h1{font-size:clamp(38px,5.2vw,64px);font-weight:600;line-height:1.05;letter-spacing:-0.5px;}
+  .hero p{margin-top:22px;font-size:18px;max-width:46ch;color:#3d4a45;}
+  .hero-actions{margin-top:34px;display:flex;gap:16px;flex-wrap:wrap;}
+  .btn-primary{background:var(--brick);color:var(--paper);padding:15px 30px;border-radius:2px;font-size:15px;font-weight:500;}
+  .btn-ghost{border:1px solid var(--ink);padding:15px 30px;border-radius:2px;font-size:15px;}
+
+  .hero-visual{
+    aspect-ratio:4/5;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(201,138,62,0.35), transparent 55%),
+      var(--ink);
+    border-radius:4px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-visual .tag{
+    position:absolute;bottom:24px;left:24px;right:24px;
+    background:rgba(251,247,238,0.94);
+    padding:18px 20px;border-radius:2px;
+  }
+  .hero-visual .tag .n{font-family:'Fraunces',serif;font-size:26px;font-weight:600;}
+  .hero-visual .tag .d{font-size:14px;color:#5a6862;margin-top:4px;}
+
+  /* MARQUEE STRIP */
+  .strip{background:var(--ink);color:var(--paper);padding:16px 0;overflow:hidden;}
+  .strip-inner{display:flex;gap:60px;font-size:14px;letter-spacing:0.4px;white-space:nowrap;}
+
+  /* SECTIONS */
+  .section{padding:96px 0;}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:52px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:28px;}
+  .section-head h2{font-size:clamp(30px,3.6vw,42px);font-weight:600;}
+  .section-head p{max-width:38ch;color:#3d4a45;}
+
+  /* MENU */
+  .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 60px;}
+  @media(max-width:700px){.menu-grid{grid-template-columns:1fr;}}
+  .menu-item{display:flex;justify-content:space-between;gap:20px;padding:22px 0;border-bottom:1px solid var(--line);}
+  .menu-item h4{font-family:'Fraunces',serif;font-size:19px;font-weight:600;}
+  .menu-item p{font-size:14px;color:#5a6862;margin-top:4px;max-width:34ch;}
+  .menu-item .price{font-family:'Fraunces',serif;font-size:18px;color:var(--brick);white-space:nowrap;}
+
+  /* STORY */
+  .story{background:var(--ink);color:var(--paper);}
+  .story-grid{display:grid;grid-template-columns:0.8fr 1.2fr;gap:64px;align-items:center;}
+  @media(max-width:900px){.story-grid{grid-template-columns:1fr;}}
+  .story-num{font-family:'Fraunces',serif;font-size:15px;color:var(--ochre);margin-bottom:16px;}
+  .story h2{font-size:clamp(28px,3.4vw,38px);font-weight:600;max-width:14ch;}
+  .story-copy p{color:#c9d1cc;font-size:16px;max-width:56ch;margin-top:20px;}
+  .story-stats{display:flex;gap:48px;margin-top:36px;flex-wrap:wrap;}
+  .story-stats div .num{font-family:'Fraunces',serif;font-size:34px;color:var(--ochre);}
+  .story-stats div .lbl{font-size:13px;color:#9aa7a1;margin-top:2px;}
+
+  /* GALLERY */
+  .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media(max-width:800px){.gallery-grid{grid-template-columns:repeat(2,1fr);}}
+  .gallery-grid div{aspect-ratio:1/1;border-radius:3px;}
+  .g1{background:linear-gradient(150deg,#8C4A3A,#1D2B26);}
+  .g2{background:linear-gradient(150deg,#C98A3E,#8C4A3A);}
+  .g3{background:linear-gradient(150deg,#1D2B26,#C98A3E);}
+  .g4{background:linear-gradient(150deg,#5a6862,#1D2B26);}
+
+  /* TESTIMONIALS */
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  @media(max-width:800px){.testi-grid{grid-template-columns:1fr;}}
+  .testi-card{background:var(--cream);border:1px solid var(--line);border-radius:3px;padding:28px;}
+  .testi-card p{font-size:16px;color:#3d4a45;}
+  .testi-card .who{margin-top:20px;font-size:14px;font-weight:600;}
+  .testi-card .role{font-size:13px;color:#5a6862;}
+
+  /* HOURS + MAP-ish */
+  .hours-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+  @media(max-width:800px){.hours-grid{grid-template-columns:1fr;}}
+  .hours-list div{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px;}
+  .hours-visual{background:var(--ink);border-radius:4px;min-height:220px;position:relative;overflow:hidden;}
+  .hours-visual::after{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 70% 30%, rgba(201,138,62,0.4), transparent 60%);
+  }
+  .hours-visual .addr{position:absolute;bottom:22px;left:22px;color:var(--paper);font-size:15px;}
+
+  /* RESERVE CTA */
+  .reserve{background:var(--ochre);}
+  .reserve-grid{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:64px 0;}
+  .reserve h2{font-size:clamp(28px,3.4vw,40px);font-weight:600;max-width:16ch;}
+  .btn-dark{background:var(--ink);color:var(--paper);padding:16px 32px;border-radius:2px;font-size:15px;white-space:nowrap;}
+
+  /* FOOTER */
+  footer{padding:60px 0 40px;font-size:14px;color:#5a6862;}
+  .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;border-top:1px solid var(--line);padding-top:28px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">Braise<span>.</span></div>
+      <div class="nav-links">
+        <a href="#menu">Menu</a>
+        <a href="#story">Our Story</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#hours">Visit</a>
+        <a href="#reserve">Contact</a>
+      </div>
+      <a href="#reserve" class="nav-cta">Reserve a Table</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker">Woodfire cooking since 2014</div>
+      <h1>The flavor of fire,<br>in the heart of the city.</h1>
+      <p>Braise is built around charcoal-fired meat and seasonal vegetables. Every plate is about restraint, timing, and getting one flavor exactly right.</p>
+      <div class="hero-actions">
+        <a href="#reserve" class="btn-primary">Reserve a Table</a>
+        <a href="#menu" class="btn-ghost">View Menu</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="tag">
+        <div class="n">This Week's Special</div>
+        <div class="d">Charcoal-roasted lamb rib, finished with hot honey</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <div class="strip-inner">
+      <span>LOCALLY SOURCED PRODUCE</span><span>OPEN-FIRE COOKING METHOD</span><span>NEW MENU DAILY</span><span>LOCALLY SOURCED PRODUCE</span><span>OPEN-FIRE COOKING METHOD</span><span>NEW MENU DAILY</span>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Signature Menu</h2>
+      <p>Built around seasonal ingredients, refreshed twice a week.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item"><div><h4>Charcoal-Seared Beef</h4><p>Thyme butter, roasted garlic</p></div><span class="price">$28</span></div>
+      <div class="menu-item"><div><h4>Seasonal Vegetable Plate</h4><p>Fire-roasted, honey glaze</p></div><span class="price">$14</span></div>
+      <div class="menu-item"><div><h4>Seafood Risotto</h4><p>White wine, lemon zest</p></div><span class="price">$24</span></div>
+      <div class="menu-item"><div><h4>Lamb Rib</h4><p>Rosemary, cracked black pepper</p></div><span class="price">$32</span></div>
+      <div class="menu-item"><div><h4>Sourdough & Butter</h4><p>House-made, salted butter</p></div><span class="price">$6</span></div>
+      <div class="menu-item"><div><h4>Salted Caramel Tart</h4><p>Sea salt, served warm</p></div><span class="price">$10</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section story" id="story">
+  <div class="wrap story-grid">
+    <div>
+      <div class="story-num">2014 — Present</div>
+      <h2>Restraint over excess</h2>
+    </div>
+    <div class="story-copy">
+      <p>Braise started with one idea: fewer ingredients, more attention. Every dish comes from fire, timing, and a direct relationship with local farmers.</p>
+      <div class="story-stats">
+        <div><div class="num">10+</div><div class="lbl">years of craft</div></div>
+        <div><div class="num">32</div><div class="lbl">seasonal dishes</div></div>
+        <div><div class="num">4.9</div><div class="lbl">average rating</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Kitchen & Dining Room</h2>
+      <p>The atmosphere of a space built around fire.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="g1"></div><div class="g2"></div><div class="g3"></div><div class="g4"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What Guests Say</h2>
+      <p>A few words from the people who kept coming back.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p>Every dish felt deliberate. Nothing was on the plate that didn't need to be there.</p>
+        <div class="who">Laura Bennett</div>
+        <div class="role">Food critic, City Table</div>
+      </div>
+      <div class="testi-card">
+        <p>The lamb rib alone is worth the reservation. Best woodfire cooking in the neighborhood.</p>
+        <div class="who">Marcus Deng</div>
+        <div class="role">Regular guest</div>
+      </div>
+      <div class="testi-card">
+        <p>Warm room, honest food, and a staff that actually knows the menu. We'll be back.</p>
+        <div class="who">Elena Vasquez</div>
+        <div class="role">Local resident</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="hours">
+  <div class="wrap hours-grid">
+    <div>
+      <div class="section-head" style="margin-bottom:28px;border:none;padding:0;">
+        <h2>Hours & Location</h2>
+      </div>
+      <div class="hours-list">
+        <div><span>Monday – Thursday</span><span>5:00 PM – 10:00 PM</span></div>
+        <div><span>Friday – Saturday</span><span>5:00 PM – 11:30 PM</span></div>
+        <div><span>Sunday</span><span>Closed</span></div>
+      </div>
+    </div>
+    <div class="hours-visual">
+      <div class="addr">12 Abay Avenue, Almaty<br>+7 (700) 123 45 67</div>
+    </div>
+  </div>
+</section>
+
+<section class="reserve" id="reserve">
+  <div class="wrap reserve-grid">
+    <h2>Reserve your table for tonight</h2>
+    <a href="#" class="btn-dark">Booking Form</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>© 2026 Braise Restaurant. All rights reserved.</div>
+    <div>12 Abay Avenue, Almaty · +7 (700) 123 45 67</div>
+  </div>
+</footer>
+
+</body>
+</html>
